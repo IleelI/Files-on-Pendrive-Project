@@ -17,12 +17,10 @@ void merge(File* files, unsigned long start, unsigned long middle, unsigned long
   std::size_t rSize = end - middle;
   File* left = new File[lSize];
   File* right = new File[rSize];
-  for (std::size_t i = 0; i < lSize; i++) {
+  for (std::size_t i = 0; i < lSize; i++)
     left[i] = files[start + i];
-  }
-  for (std::size_t i = 0; i < rSize; i++) {
+  for (std::size_t i = 0; i < rSize; i++)
     right[i] = files[middle + 1 + i];
-  }
   unsigned long lIdx = 0, rIdx = 0, filesIdx = start;
   if (sortById) {
     while (lIdx < lSize && rIdx < rSize) {
@@ -48,12 +46,10 @@ void merge(File* files, unsigned long start, unsigned long middle, unsigned long
       }
     }
   }
-  while (lIdx < lSize) {
+  while (lIdx < lSize)
     files[filesIdx++] = left[lIdx++];
-  }
-  while (rIdx < rSize) {
+  while (rIdx < rSize)
     files[filesIdx++] = right[rIdx++];
-  }
   delete[] left;
   delete[] right;
 }
@@ -86,31 +82,25 @@ void getPendriveSizes(File* files, unsigned long penSize, unsigned long noFiles,
       i-=1;
     }
   }
-  if (isFirstFull == false) {
+  if (!isFirstFull)
     penInfo->firstPenSize = noFiles;
-  }
-  else {
+  else
     penInfo->secondPenSize = noFiles - penInfo->firstPenSize;
-  }
 }
 void assignFilesToPendrives(File* files, File* firstPendrive, File* secondPendrive, PenInfo penInfo) {
-  for (std::size_t i = 0; i < penInfo.firstPenSize; i++) {
+  for (std::size_t i = 0; i < penInfo.firstPenSize; i++)
     firstPendrive[i] = files[i];
-  }
-  for (std::size_t i = 0; i < penInfo.secondPenSize; i++) {
+  for (std::size_t i = 0; i < penInfo.secondPenSize; i++)
     secondPendrive[i] = files[penInfo.firstPenSize+i];
-  }
 }
 void printPendrives(File* firstPendrive, File* secondPendrive, PenInfo penInfo) {
   printf("%lu\n", penInfo.firstPenSize+penInfo.secondPenSize);
   printf("1: ");
-  for (std::size_t i = 0; i < penInfo.firstPenSize; i++) {
+  for (std::size_t i = 0; i < penInfo.firstPenSize; i++)
     printf("%lu ", firstPendrive[i].id);
-  }
   printf("\n2: ");
-  for (std::size_t i = 0; i < penInfo.secondPenSize; i++) {
+  for (std::size_t i = 0; i < penInfo.secondPenSize; i++)
     printf("%lu ", secondPendrive[i].id);
-  }
 }
 
 int main() {
@@ -132,12 +122,10 @@ int main() {
     sort(firstPendrive,0,penInfo.firstPenSize-1,true);
     sort(secondPendrive,0,penInfo.secondPenSize-1,true);
   }
-  else if (penInfo.firstPenSize == 0) {
+  else if (penInfo.firstPenSize == 0)
     sort(secondPendrive,0,penInfo.secondPenSize-1,true);
-  }
-  else if (penInfo.secondPenSize == 0) {
+  else if (penInfo.secondPenSize == 0)
     sort(firstPendrive,0,penInfo.firstPenSize-1,true);
-  }
 
   printPendrives(firstPendrive,secondPendrive,penInfo);
 
